@@ -1,0 +1,50 @@
+[
+  {
+    "id": "log-1791827627699-y6z5",
+    "orderId": "ONS-2026-TEST01",
+    "timestamp": "2026-10-12T17:53:47.699Z",
+    "type": "retry",
+    "recipientA": {
+      "recipientId": "recipient_a",
+      "phone": "01036639814",
+      "status": "not_configured",
+      "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment).",
+      "timestamp": "2026-10-12T17:53:47.699Z",
+      "attempts": 1
+    },
+    "recipientB": {
+      "recipientId": "recipient_b",
+      "phone": "01001234567",
+      "status": "not_configured",
+      "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment).",
+      "timestamp": "2026-10-12T17:53:47.699Z",
+      "attempts": 1
+    },
+    "overallStatus": "not_configured",
+    "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment)."
+  },
+  {
+    "id": "log-1791827614468-w3xr",
+    "orderId": "ONS-2026-TEST01",
+    "timestamp": "2026-10-12T17:53:34.460Z",
+    "type": "order_alert",
+    "recipientA": {
+      "recipientId": "recipient_a",
+      "phone": "01036639814",
+      "status": "not_configured",
+      "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment).",
+      "timestamp": "2026-10-12T17:53:34.460Z",
+      "attempts": 1
+    },
+    "recipientB": {
+      "recipientId": "recipient_b",
+      "phone": "01001234567",
+      "status": "not_configured",
+      "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment).",
+      "timestamp": "2026-10-12T17:53:34.460Z",
+      "attempts": 1
+    },
+    "overallStatus": "not_configured",
+    "error": "WhatsApp Business API is not configured on the server (missing WHATSAPP_API_TOKEN or WHATSAPP_PHONE_NUMBER_ID in environment)."
+  }
+]

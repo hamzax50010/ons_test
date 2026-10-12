@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1000" fill="none">
+  <!-- ONS Healthcare Official Color Logo (Transparent Background - Zero Background Mask) -->
+  <g>
+    <!-- Left Ring: Deep Teal #153B36 -->
+    <circle cx="330" cy="355" r="210" stroke="#153B36" stroke-width="96" fill="none" />
+
+    <!-- Right Ring: Soft Teal #70A69A (Diagonal weave with intentional clean gap at top, crossing OVER at bottom) -->
+    <path d="M 458.7,101.9 A 210,210 0 1 1 368.1,222.1" stroke="#70A69A" stroke-width="96" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Official Typography: O N S in Deep Teal -->
+  <text x="450" y="885" text-anchor="middle" fill="#153B36" font-family="'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="800" font-size="180" letter-spacing="0.32em">
+    ONS
+  </text>
+</svg>

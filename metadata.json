@@ -1,0 +1,6 @@
+{
+  "name": "أُنس | ONS Healthcare",
+  "description": "رعاية صحية منزلية وطبية متميزة في القاهرة والجيزة — لأن صحتك تستحق الأفضل. Premium home healthcare and medical services in Cairo & Giza.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

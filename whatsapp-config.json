@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "recipientAPhone": "+201008658048",
+  "recipientBPhone": "+201036639814",
+  "recipientAName": "منسق الرعاية السريرية (Coordinator A)",
+  "recipientBName": "مدير العمليات السريرية (Operations Lead B)",
+  "defaultLanguage": "ar",
+  "lastTestedAt": "2026-10-12T18:10:34.055Z",
+  "lastTestStatus": "connected"
+}

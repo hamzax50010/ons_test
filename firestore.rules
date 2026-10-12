@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    // Bootstrapped Owner verification against verified Google token
+    function isConfiguredOwner() {
+      return isEmailVerified() && request.auth.token.email.lower() == 'hamzadiab500@gmail.com';
+    }
+
+    function isAdmin() {
+      return isEmailVerified() && (
+        isConfiguredOwner() ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Admin directory - verified admins/owners only
+    match /admins/{adminId} {
+      allow get: if isEmailVerified() && (request.auth.uid == adminId || isAdmin());
+      allow list: if isAdmin();
+      allow create, update, delete: if isAdmin() && isValidId(adminId);
+    }
+
+    // Site settings - Public read, Admin write
+    match /siteSettings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(settingId);
+    }
+
+    // Site content - Public read, Admin write
+    match /siteContent/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(contentId);
+    }
+
+    // Service categories - Public read, Admin write
+    match /serviceCategories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(categoryId);
+    }
+
+    // Services - Public read, Admin write
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(serviceId);
+    }
+
+    // Service areas - Public read, Admin write
+    match /serviceAreas/{areaId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(areaId);
+    }
+
+    // Reviews - Public read if published, Admin full read/write
+    match /reviews/{reviewId} {
+      allow read: if (resource.data.published == true) || isAdmin();
+      allow write: if isAdmin() && isValidId(reviewId);
+    }
+
+    // Customer Requests - Public CREATE only with strict payload validation
+    // ONLY admins can get, list, update, or delete requests.
+    match /customerRequests/{requestId} {
+      allow get: if isAdmin() && isValidId(requestId);
+      allow list: if isAdmin();
+      allow update, delete: if isAdmin() && isValidId(requestId);
+
+      allow create: if isValidId(requestId)
+        && incoming().serviceId is string && incoming().serviceId.size() <= 100
+        && incoming().areaId is string && incoming().areaId.size() <= 100
+        && incoming().customerName is string && incoming().customerName.size() > 1 && incoming().customerName.size() <= 120
+        && incoming().phone is string && incoming().phone.size() >= 8 && incoming().phone.size() <= 30
+        && incoming().status == 'new'
+        && (!('notes' in incoming()) || (incoming().notes is string && incoming().notes.size() <= 1000))
+        && (!('addressDetails' in incoming()) || (incoming().addressDetails is string && incoming().addressDetails.size() <= 1000))
+        && (!('whatsapp' in incoming()) || (incoming().whatsapp is string && incoming().whatsapp.size() <= 30))
+        && (!('identityDocumentName' in incoming()) || (incoming().identityDocumentName is string && incoming().identityDocumentName.size() <= 200));
+    }
+
+    // Service Providers - Restricted to authenticated Admins only (Never publicly readable)
+    match /serviceProviders/{providerId} {
+      allow read, write: if isAdmin() && isValidId(providerId);
+    }
+
+    // Integrations - Restricted to authenticated Admins only
+    match /integrations/{integrationId} {
+      allow read, write: if isAdmin() && isValidId(integrationId);
+    }
+
+    // Audit logs - Admin only
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin() && isValidId(logId);
+      allow update, delete: if false; // Immutable audit log
+    }
+  }
+}

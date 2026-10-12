@@ -1,0 +1,231 @@
+{
+  "entities": {
+    "admin": {
+      "title": "Admin",
+      "description": "Authorized administrator record for ONS Healthcare",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Owner email address"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["owner", "admin"],
+          "description": "Authorization level"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp created"
+        }
+      },
+      "required": ["email", "role"]
+    },
+    "siteSettings": {
+      "title": "SiteSettings",
+      "description": "Global website branding, contact info, and configuration",
+      "type": "object",
+      "properties": {
+        "siteNameAr": { "type": "string", "maxLength": 100 },
+        "siteNameEn": { "type": "string", "maxLength": 100 },
+        "sloganAr": { "type": "string", "maxLength": 200 },
+        "sloganEn": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "whatsapp": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 100 },
+        "currency": { "type": "string", "maxLength": 10 },
+        "defaultLanguage": { "type": "string", "enum": ["ar", "en"] },
+        "businessHoursAr": { "type": "string", "maxLength": 200 },
+        "businessHoursEn": { "type": "string", "maxLength": 200 },
+        "announcementAr": { "type": "string", "maxLength": 500 },
+        "announcementEn": { "type": "string", "maxLength": 500 },
+        "announcementActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["siteNameAr", "siteNameEn", "phone", "whatsapp", "currency"]
+    },
+    "siteContent": {
+      "title": "SiteContent",
+      "description": "Bilingual editorial website text for pages and sections",
+      "type": "object",
+      "properties": {
+        "sectionId": { "type": "string", "maxLength": 100 },
+        "contentAr": { "type": "string", "maxLength": 10000 },
+        "contentEn": { "type": "string", "maxLength": 10000 },
+        "published": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sectionId", "contentAr", "contentEn"]
+    },
+    "serviceCategory": {
+      "title": "ServiceCategory",
+      "description": "Grouping classification for medical and nursing services",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9_-]+$", "maxLength": 80 },
+        "nameAr": { "type": "string", "maxLength": 120 },
+        "nameEn": { "type": "string", "maxLength": 120 },
+        "descriptionAr": { "type": "string", "maxLength": 500 },
+        "descriptionEn": { "type": "string", "maxLength": 500 },
+        "order": { "type": "number" },
+        "active": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "nameAr", "nameEn", "order", "active"]
+    },
+    "service": {
+      "title": "Service",
+      "description": "Individual healthcare service offering",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9_-]+$", "maxLength": 80 },
+        "categoryId": { "type": "string", "maxLength": 100 },
+        "nameAr": { "type": "string", "maxLength": 150 },
+        "nameEn": { "type": "string", "maxLength": 150 },
+        "summaryAr": { "type": "string", "maxLength": 300 },
+        "summaryEn": { "type": "string", "maxLength": 300 },
+        "descriptionAr": { "type": "string", "maxLength": 5000 },
+        "descriptionEn": { "type": "string", "maxLength": 5000 },
+        "instructionsAr": { "type": "string", "maxLength": 2000 },
+        "instructionsEn": { "type": "string", "maxLength": 2000 },
+        "basePriceMin": { "type": "number" },
+        "basePriceMax": { "type": "number" },
+        "isPriceIndicative": { "type": "boolean" },
+        "priceNoteAr": { "type": "string", "maxLength": 300 },
+        "priceNoteEn": { "type": "string", "maxLength": 300 },
+        "featured": { "type": "boolean" },
+        "active": { "type": "boolean" },
+        "order": { "type": "number" },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "availableAreaIds": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "categoryId", "nameAr", "nameEn", "active"]
+    },
+    "serviceArea": {
+      "title": "ServiceArea",
+      "description": "Geographical coverage zone in Cairo and Giza",
+      "type": "object",
+      "properties": {
+        "nameAr": { "type": "string", "maxLength": 100 },
+        "nameEn": { "type": "string", "maxLength": 100 },
+        "cityAr": { "type": "string", "maxLength": 50 },
+        "cityEn": { "type": "string", "maxLength": 50 },
+        "active": { "type": "boolean" },
+        "travelFee": { "type": "number" },
+        "notesAr": { "type": "string", "maxLength": 300 },
+        "notesEn": { "type": "string", "maxLength": 300 },
+        "order": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["nameAr", "nameEn", "cityAr", "cityEn", "active", "travelFee"]
+    },
+    "customerRequest": {
+      "title": "CustomerRequest",
+      "description": "Service request submitted by customer",
+      "type": "object",
+      "properties": {
+        "serviceId": { "type": "string", "maxLength": 100 },
+        "serviceNameAr": { "type": "string", "maxLength": 150 },
+        "serviceNameEn": { "type": "string", "maxLength": 150 },
+        "areaId": { "type": "string", "maxLength": 100 },
+        "areaNameAr": { "type": "string", "maxLength": 100 },
+        "areaNameEn": { "type": "string", "maxLength": 100 },
+        "customerName": { "type": "string", "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 100 },
+        "addressDetails": { "type": "string", "maxLength": 500 },
+        "preferredDate": { "type": "string", "maxLength": 50 },
+        "preferredTimeSlot": { "type": "string", "maxLength": 50 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "status": {
+          "type": "string",
+          "enum": ["new", "under_review", "awaiting_confirmation", "confirmed", "in_progress", "completed", "cancelled"]
+        },
+        "confirmedPrice": { "type": "number" },
+        "travelFee": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "adminNotes": { "type": "string", "maxLength": 2000 },
+        "cancellationReason": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["serviceId", "areaId", "customerName", "phone", "status"]
+    },
+    "reviewItem": {
+      "title": "ReviewItem",
+      "description": "Verified customer testimonial or approved review",
+      "type": "object",
+      "properties": {
+        "authorNameAr": { "type": "string", "maxLength": 100 },
+        "authorNameEn": { "type": "string", "maxLength": 100 },
+        "serviceNameAr": { "type": "string", "maxLength": 100 },
+        "serviceNameEn": { "type": "string", "maxLength": 100 },
+        "commentAr": { "type": "string", "maxLength": 1000 },
+        "commentEn": { "type": "string", "maxLength": 1000 },
+        "rating": { "type": "number" },
+        "source": { "type": "string", "enum": ["ons_direct", "google_external", "verified_patient"] },
+        "published": { "type": "boolean" },
+        "verified": { "type": "boolean" },
+        "date": { "type": "string", "maxLength": 50 },
+        "order": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["authorNameAr", "commentAr", "published"]
+    },
+    "auditLog": {
+      "title": "AuditLog",
+      "description": "Administrative actions audit trail",
+      "type": "object",
+      "properties": {
+        "actorEmail": { "type": "string", "format": "email" },
+        "action": { "type": "string", "maxLength": 100 },
+        "targetCollection": { "type": "string", "maxLength": 50 },
+        "targetId": { "type": "string", "maxLength": 100 },
+        "details": { "type": "string", "maxLength": 1000 },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["actorEmail", "action", "targetCollection", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": "admin",
+      "description": "Protected admin allowlist identifying authorized owners and admins"
+    },
+    "/siteSettings/{settingId}": {
+      "schema": "siteSettings",
+      "description": "Public readable, admin editable site configuration"
+    },
+    "/siteContent/{contentId}": {
+      "schema": "siteContent",
+      "description": "Editorial texts, about sections, FAQs, and policies"
+    },
+    "/serviceCategories/{categoryId}": {
+      "schema": "serviceCategory",
+      "description": "Healthcare service categories"
+    },
+    "/services/{serviceId}": {
+      "schema": "service",
+      "description": "Healthcare services and clinical care programs"
+    },
+    "/serviceAreas/{areaId}": {
+      "schema": "serviceArea",
+      "description": "Coverage zones in Cairo and Giza"
+    },
+    "/customerRequests/{requestId}": {
+      "schema": "customerRequest",
+      "description": "Incoming patient service requests with restricted PII access"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "reviewItem",
+      "description": "Customer testimonials and ratings"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "auditLog",
+      "description": "Owner audit trail records"
+    }
+  }
+}
